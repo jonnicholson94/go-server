@@ -16,9 +16,12 @@ func main() {
 
 	utils.Initialise()
 
+	rate := 1
+	limiter := middleware.NewRateLimiter(rate)
+
 	mux := http.NewServeMux()
 
-	wrappedHandler := middleware.Auth(mux)
+	wrappedHandler := middleware.Auth(limiter.Limit(mux))
 
 	mux.HandleFunc("/todo", func(w http.ResponseWriter, r *http.Request) {
 		if r.Method == http.MethodPost {
@@ -33,6 +36,10 @@ func main() {
 	mux.HandleFunc("/all-todos", handlers.AllTodos)
 
 	mux.HandleFunc("/user-todos", handlers.UserTodos)
+
+	mux.HandleFunc("/delete-todo", handlers.DeleteTodo)
+
+	mux.HandleFunc("/update-todo", handlers.UpdateTodo)
 
 	http.ListenAndServe(":8080", wrappedHandler)
 

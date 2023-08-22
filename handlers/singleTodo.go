@@ -6,13 +6,6 @@ import (
 	"net/http"
 )
 
-type FullTodo struct {
-	ID     string `json:"id"`
-	Title  string `json:"title"`
-	Status bool   `json:"boolean"`
-	UserId string `json:"user_id"`
-}
-
 func SingleTodo(w http.ResponseWriter, r *http.Request) {
 
 	// Read request param (?)

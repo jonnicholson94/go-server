@@ -7,15 +7,9 @@ import (
 	"net/http"
 )
 
-type Todo struct {
-	Title  string `json:"title"`
-	Status bool   `json:"boolean"`
-	UserId string `json:"user_id"`
-}
-
 func CreateTodo(w http.ResponseWriter, r *http.Request) {
 
-	var todo Todo
+	var todo NewTodo
 
 	err := json.NewDecoder(r.Body).Decode(&todo)
 
